@@ -37,7 +37,7 @@ public class hdfsServiceImpl implements hdfsService{
 	//private String fileUploadFileName;
 	private String uri="hdfs://192.168.41.128:9000";
 	private String localPath="D:/HDFS-download";
- 
+  
 	Configuration conf =new Configuration();
 	@Resource
 	private hdfsBean hdfs;
