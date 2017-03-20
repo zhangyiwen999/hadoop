@@ -24,79 +24,91 @@ import org.springframework.web.servlet.ModelAndView;
 import com.company.bean.hdfsBean;
 import com.company.service.hdfsService;
 
-
-
 @Controller
 @RequestMapping("/hdfs")
 public class hdfsController {
-	
-	
-	
-	private hdfsService hdfsService;	
+
+	private hdfsService hdfsService;
+
 	public hdfsService getHdfsService() {
 		return hdfsService;
 	}
-    @Resource
+
+	@Resource
 	public void setHdfsService(hdfsService hdfsService) {
 		this.hdfsService = hdfsService;
 	}
 
-	@RequestMapping("/delete")  
-    public String toDelete(@RequestParam(value="path",required=false) String path)
-       throws IOException{  
-		  hdfsService.delete(path);          	
-          return "success"; 		
-}
+	@RequestMapping("/delete")
+	public String toDelete(
+			@RequestParam(value = "path", required = false) String path)
+			throws IOException {
 
-
-	 @RequestMapping(value="/ls",method=RequestMethod.GET)
-	    public ModelAndView home(@RequestParam(value="path",required=false) String path, HttpServletRequest request, HttpServletResponse response) 
-	       throws Exception {
-		    ModelAndView model = new ModelAndView();
-	        if (StringUtils.isEmpty(path)) {
-	            path = "/";
-	        } 
-			List<hdfsBean> hdfsFiles =hdfsService.ls(path);
-	        model.addObject("file", hdfsFiles);
-	        model.setViewName("/ls");
-	        return model;
-	    }
-	 
-	 
-	 @RequestMapping("/download")  
-	    public String toDownload(@RequestParam(value="path",required=false) String path)
-	       throws IOException{  
-			 hdfsService.download(path);          	
-	          return "success";  		
+		hdfsService.delete(path);
+		return "success";
 	}
-	 
-	 
-	 @RequestMapping(value="/upload")
-	 public String upLoad(HttpServletRequest request, HttpServletResponse response) 
-	            throws IllegalStateException, IOException{
-	        //解析器解析request的上下文
-	        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext()); 
-	        //先判断request中是否包涵multipart类型的数据，
-	        if(multipartResolver.isMultipart(request)) {
-	            //再将request中的数据转化成multipart类型的数据
-	            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-	            Iterator<String> iter = multiRequest.getFileNames();
-	            while(iter.hasNext()) {
-	                MultipartFile file = multiRequest.getFile(iter.next());
-	                if(file != null) {
-	                	String FileName = file.getOriginalFilename();
-	                	System.out.println(FileName);
-	                    CommonsMultipartFile cf= (CommonsMultipartFile)file; 
-	                    DiskFileItem fi = (DiskFileItem)cf.getFileItem(); 
-	                    File inputFile = fi.getStoreLocation();
-	                    hdfsService.createFile(inputFile, "hdfs://192.168.12.232:9000/upload/"+FileName);                                       
-	                }
-	            }
-	        }
-	        return "success";
-	    }
-	    
-	 
-	 
-	 
+
+	@RequestMapping(value = "/ls", method = RequestMethod.GET)
+	public ModelAndView home(
+			@RequestParam(value = "path", required = false) String path,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		ModelAndView model = new ModelAndView();
+		if (StringUtils.isEmpty(path)) {
+			path = "/";
+		}
+		List<hdfsBean> hdfsFiles = hdfsService.ls(path);
+		model.addObject("file", hdfsFiles);
+		model.setViewName("/ls");
+		return model;
+	}
+
+	@RequestMapping("/download")
+	public String toDownload(
+			@RequestParam(value = "path", required = false) String path)
+			throws IOException {
+		hdfsService.download(path);
+		return "success";
+	}
+
+	@RequestMapping("/mkdir")
+	public String toMkdir(
+			@RequestParam(value = "path", required = false) String path)
+			throws IOException {
+		path += "/test";
+		System.out.println("将要创建的目录为" + path);
+		hdfsService.mkdir(path);
+		return "success";
+	}
+
+	@RequestMapping(value = "/upload")
+	public String upLoad(HttpServletRequest request,
+			HttpServletResponse response) throws IllegalStateException,
+			IOException {
+		// 解析器解析request的上下文
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		// 先判断request中是否包涵multipart类型的数据，
+		if (multipartResolver.isMultipart(request)) {
+			// 再将request中的数据转化成multipart类型的数据
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null) {
+					String FileName = file.getOriginalFilename();
+					System.out.println(FileName);
+					CommonsMultipartFile cf = (CommonsMultipartFile) file;
+					DiskFileItem fi = (DiskFileItem) cf.getFileItem();
+					File inputFile = fi.getStoreLocation();
+					hdfsService
+							.createFile(inputFile,
+									"hdfs://192.168.41.128:9000/usr/hadoop/"
+											+ FileName);
+				}
+			}
+		}
+		return "success";
+	}
+
 }

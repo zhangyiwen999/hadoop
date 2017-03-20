@@ -12,7 +12,7 @@
 <body>
 <table>
 	<tr>
-		<td>文件名</td>
+		<td>文件名</td> 
 		<td>文件大小  </td>
 		<td>拥有者 </td>
 		<td>权限  </td>
@@ -27,8 +27,10 @@
 			 <td> ${file.owner}</td>	
 			 <td> ${file.permission}</td>	
 			 <td> ${file.modificationTime}</td>	
-			 
-			 <td><a href="${pageContext.request.contextPath}/hdfs/delete.do?path=${file.fileName}" style="color:#666666;text-decoration:none;"
+			 <td>
+			 <a href="${pageContext.request.contextPath}/hdfs/mkdir.do?path=${file.fileName}" style="color:#666666;text-decoration:none;">
+			 创建目录</a>
+			 <a href="${pageContext.request.contextPath}/hdfs/delete.do?path=${file.fileName}" style="color:#666666;text-decoration:none;"
 			  class="button border-dot button-little" onclick="return confirm('确认删除?')" >
 			                   删除  </a>
 			 &nbsp;&nbsp;
@@ -36,7 +38,9 @@
 			 下载</a></td>
     </tr>
 	</c:forEach>
+  
  <input type="button" value="返回"   onclick="javascript:window.location='<%=ref%>'" >
+ <input type="button" value="返回主页"   onclick="javascript:window.location='http://localhost:8080/HDFSWEB/'" >
 </table>
 </body>
 </html>
