@@ -4,8 +4,8 @@
 <head>  
 </head>  
 <body>  
-    <h3>upload :</h3>
-    Please choose the file :<br />
+    <h3>上传文件 :</h3>
+    选择本地需要上传的文件路径 :<br />
     <form action="hdfs/upload.do" method="post" enctype="multipart/form-data">
         <input type="file" name="file" size="50" />
         <br/>

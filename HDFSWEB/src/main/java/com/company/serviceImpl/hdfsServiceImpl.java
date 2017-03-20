@@ -105,7 +105,6 @@ public class hdfsServiceImpl implements hdfsService {
 		fs.copyFromLocalFile(new Path(local), new Path(hdfsPath));
 		System.out.println("copy from: " + local + " to " + hdfsPath);
 		fs.close();
-
 	}
 
 	public void createFile(File local, String hdfsPath) throws IOException {
