@@ -2,16 +2,16 @@
 $(function(){
 	// 绑定登录form表单
 	$('#login_ff').form({    
-	    url:'user/hdfsUser_login.action',      
+	    url:'user/hdfsUser_login.action', 
+	    //成功登陆，将json字符串进行解析
 	    success:function(data){    
 	    	var jsonData = JSON.parse(data);
-	    	/*if("true" == jsonData.flag){
+	    	if("true" == jsonData.flag){
 	    		$('#login_window').window('close');
 	    		 window.location.href="main.jsp";
 	    	}else{
 	    		$.messager.alert('提示',jsonData.msg,'info');
-	    	}*/
-	    	window.location.href="main.jsp";
+	    	}
 	    }    
 	});    
 	
@@ -54,6 +54,10 @@ $(function(){
 	});
 });
 
+//进行登陆，对表单进行提交
+function login(){
+	$('#login_ff').submit(); 
+}
 
 /**
  * 更新项目
@@ -71,11 +75,6 @@ function update_project(title_,data){
 	
 }
 
-
-// 登录
-function login(){
-	$('#login_ff').submit(); 
-}
 // 注销
 function logout(){
 	$.messager.confirm('提示', '您想要退出该系统吗？', function(r){

@@ -17,12 +17,12 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<context:annotation-config />
 	<context:component-scan base-package="demo" />
 	<context:component-scan base-package="ssh" />
-
+	
+	<!-- 配置dbcp数据源,数据库连接池,从jdbc的property读取数据-->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations" value="classpath:jdbc.properties" />
 	</bean>
-	<!-- 配置dbcp数据源 -->
 	<bean id="dataSource" destroy-method="close"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -31,7 +31,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
-	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<!-- 配置sessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

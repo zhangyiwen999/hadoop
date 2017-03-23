@@ -1,12 +1,14 @@
 package ssh.model;
+
 /**
- * HDFS模块 用户登录model 
+ * HDFS模块-用户登录model 
+ * entity:说明是个实体类
+
  * email 确认两个用户是否是同一个用户
  */
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Entity
 public class HdfsUser {
@@ -15,11 +17,11 @@ public class HdfsUser {
 	private String email;
 	private String password; // 加密存储 md5
 	// 要设计成单例 才行
-//	private String hdfsUserName; // 权限模块
-//	private String hdfsPassword;// 权限模块，加密存储md5
-	
-	
+	// private String hdfsUserName; // 权限模块
+	// private String hdfsPassword;// 权限模块，加密存储md5
+
 	private int authority; // 权限
+
 	@Id
 	@GeneratedValue
 	public int getId() {

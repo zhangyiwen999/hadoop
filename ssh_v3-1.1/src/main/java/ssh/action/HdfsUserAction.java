@@ -24,13 +24,15 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * Hdfs 模块用户登录
  * 
- * @author fansy
+ * @author Robin
  * 
  */
 @Resource(name = "hdfsUserAction")
 public class HdfsUserAction extends ActionSupport implements
 		ModelDriven<HdfsUser> {
+	// 登陆用户实体类
 	HdfsUser hdfsUser = new HdfsUser();
+	//
 	private HdfsUserService hdfsUserService;
 
 	private String hadoopUserName;
@@ -51,7 +53,7 @@ public class HdfsUserAction extends ActionSupport implements
 	}
 
 	/**
-	 * 登录
+	 * 登录函数，用户名，密码不能为空
 	 * 
 	 * @throws IOException
 	 * @throws ServletException

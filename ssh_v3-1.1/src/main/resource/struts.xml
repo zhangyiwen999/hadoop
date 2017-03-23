@@ -36,6 +36,7 @@
 		</action>
 	</package>
 	
+	<!-- 通配符映射，在这里定义需要调用到的函数的name和namespace -->
 	<package name="user" namespace="/user" extends="struts-default">
 		<action name="hdfsUser_*" method="{1}" class="ssh.action.HdfsUserAction"></action>
 	</package>

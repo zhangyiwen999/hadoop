@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 
-<title>Hadoop Ecosystem</title>
+<title>校园分布式云存储平台</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -18,7 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 
-<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+<!-- 加载CSS文件 -->
+<link rel="stylesheet" type="text/css" href="themes/gray/easyui.css">
 <link rel="stylesheet" type="text/css" href="themes/icon.css">
 <link rel="stylesheet" type="text/css" href="css/demo.css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -32,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div data-options="region:'north'" style="height:70px;padding-top: 5px">
 		<table align="center" border="0" width="100%">
 			<tr style="font-size: 20px;text-align: center;font-weight: bold;"><td>
-				Hadoop Ecosystem</td>
+				校园分布式云存储平台</td>
 		</tr>
 		<!-- <p style="text-align: right;padding-right: 180px;font-size: 13px;padding-top: 0px"> -->
 		<tr style="font-size: 13px;text-align: right;">
