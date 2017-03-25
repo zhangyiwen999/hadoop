@@ -147,8 +147,9 @@ public class HdfsService {
 	public boolean download(String fileName, String localFile) throws Exception {
 		boolean flag = true;
 		try {
-			HadoopUtils.getFs().copyToLocalFile(new Path(fileName),
-					new Path(localFile));
+			// 关闭本地文件校验
+			HadoopUtils.getFs().copyToLocalFile(false, new Path(fileName),
+					new Path(localFile), true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("数据下载异常，src:{},des:{}",
