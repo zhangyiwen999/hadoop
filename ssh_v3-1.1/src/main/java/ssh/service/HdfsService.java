@@ -14,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import ssh.model.HdfsResponseProperties;
 import ssh.util.HadoopUtils;
 import ssh.util.Utils;
@@ -30,13 +28,6 @@ public class HdfsService {
 		List<HdfsResponseProperties> files = new ArrayList<>();
 		FileSystem fs = HadoopUtils.getFs();
 		FileStatus[] filesStatus = fs.listStatus(new Path(folder));
-		// RemoteIterator<LocatedFileStatus> children = fs.listFiles(new Path(
-		// folder), false);// 递归设置为flase，不需要对子文件夹再次递归
-		// // 需返回文件的属性？
-		// while (children.hasNext()) {
-		// files.add(Utils.getDataFromLocatedFileStatus(children.next()));
-		// }
-
 		for (FileStatus file : filesStatus) {
 			files.add(Utils.getDataFromLocatedFileStatus(file));
 		}
@@ -167,18 +158,20 @@ public class HdfsService {
 		return flag;
 	}
 
-	public String read(String fileName, String textSeq, int records) throws Exception {
+	public String read(String fileName, String textSeq, int records)
+			throws Exception {
 		String data = null;
-		try{
-			if("text".equals(textSeq)){
-				data = HadoopUtils.readText(fileName,records);
-			}else if("seq".equals(textSeq)){
-				data = HadoopUtils.readSeq(fileName,records);
-			}else{
-				log.info("数据读取参数设置错误,textSeq:{}",textSeq);
+		try {
+			if ("text".equals(textSeq)) {
+				data = HadoopUtils.readText(fileName, records);
+			} else if ("seq".equals(textSeq)) {
+				data = HadoopUtils.readSeq(fileName, records);
+			} else {
+				log.info("数据读取参数设置错误,textSeq:{}", textSeq);
 			}
-		}catch(Exception exception){
-			log.info("数据读取异常:fileName:{},textSeq:{}",new Object[]{fileName,textSeq});
+		} catch (Exception exception) {
+			log.info("数据读取异常:fileName:{},textSeq:{}", new Object[] { fileName,
+					textSeq });
 			throw exception;
 		}
 		return data;

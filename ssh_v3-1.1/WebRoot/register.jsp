@@ -26,20 +26,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 						<td>用户名:</td>
 						<td><input class="easyui-textbox" type="text" name="name"
-							style="height:30px;width: 180px;" value="fansy"
+							style="height:30px;width: 180px;" value="Mandy"
 							data-options="validType:['length[3,20]'] ,required:true,prompt:'username...'"></input></td>
 					</tr>
 					<tr>
 						<td>邮箱:</td>
 						<td><input class="easyui-textbox" type="text" name="email" id="register_eamil"
-							style="height:30px;width: 180px;" value="fansy@qq.com"
+							style="height:30px;width: 180px;" value="mandy@qq.com"
 							data-options="validType:['email'],required:true,prompt:'email...'"></input></td>
 					</tr>
 					<tr>
 						<td>密码:</td>
 						<td><input class="easyui-textbox" type="password" name="password"
 							style="height:30px;width: 180px;" value=""
-							data-options="validType:['length[3,20]'],required:true,prompt:''"></input></td>
+							data-options="validType:['length[6,20]'],required:true,prompt:''"></input></td>
 					</tr>
 				</table>
 			</form>

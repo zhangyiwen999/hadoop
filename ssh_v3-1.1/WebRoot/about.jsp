@@ -26,12 +26,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <div style="padding: 15px">
 		<p><h2>
-			Hadoop EcoSystem 大杂烩！
+			基于Hadoop的文件管理系统
 			</h2>
-		</p>    	
+		</p>  
+		<!--   	
 		<div id="project_about_id">
 			HDFS文件管理系统
 		</div>
+		--> 
 		<s:debug></s:debug>
     
     </div> <br>

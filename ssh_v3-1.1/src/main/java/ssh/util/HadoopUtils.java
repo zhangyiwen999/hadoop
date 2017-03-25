@@ -157,6 +157,7 @@ public class HadoopUtils {
 	public static boolean checkHdfsAuth(String folder, String permission)
 			throws IllegalArgumentException, IOException {
 		FileStatus fileStatus = getFs().getFileStatus(new Path(folder));
+		log.info("fileOwner: " + fileStatus.getOwner());
 		if (fileStatus.getOwner().equals(getHadoopUserName()))
 			return true;
 		log.info("userAction:{},groupAction:{},otherAction:{}", new Object[] {

@@ -25,10 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div style="padding: 15px">
 		<div style="margin:20px 0;">
-			<span>目录:</span> <input class="easyui-validatebox" type="text"
+			<!-- 输入目录 ，确定浏览 -->
+			<span>目录:</span> 
+			<input class="easyui-validatebox" type="text"
 				id="hdfsManager_list_folder" data-options="required:true"
 				style="width:300px" value="/" />
-				<a  class="easyui-linkbutton" iconCls="icon-reload" onclick="list_data()">确定</a>
+			<a  class="easyui-linkbutton" iconCls="icon-reload" onclick="list_data()">确定</a>
 		</div>
 
 		<table id="dg_hdfsManager_list" class="easyui-datagrid"></table>

@@ -7,34 +7,34 @@
 	"children":[{
 		"id":11,
 		"text":"目录",
-		"state":"closed",
+		"state":"open",
 		"attributes":{
 			"folder":"1"
 		},
 		"children":[{
 			"id":111,
-			"text":"目录浏览",
+			"text":"浏览目录",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/folder/list.jsp"
 			}
 		},{
 			"id":112,
-			"text":"目录检索",
+			"text":"检索目录",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/folder/search.jsp"
 			}
 		},{
 			"id":113,
-			"text":"目录新建",
+			"text":"新建目录",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/folder/create.jsp"
 			}
 		},{
 			"id":114,
-			"text":"目录删除",
+			"text":"删除目录",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/folder/delete.jsp"
@@ -42,35 +42,35 @@
 		}]
 	},{
 		"id":12,
-		"text":"文件",
+		"text":"文件操作",
 		"state":"open",
 		"attributes":{
 			"folder":"1"
 		},
 		"children":[{
 			"id":121,
-			"text":"文件查看",
+			"text":"查看文件",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/file/read.jsp"
 			}
 		},{
 			"id":122,
-			"text":"文件上传",
+			"text":"上传文件",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/file/upload.jsp"
 			}
 		},{
 			"id":123,
-			"text":"文件下载",
+			"text":"下载文件",
 			"attributes":{
 				"folder":"0",
 				"url":"hdfsManager/file/download.jsp"
 			}
 		},{
 			"id":124,
-			"text":"文件删除",
+			"text":"删除文件",
 			"checked":true,
 			"attributes":{
 				"folder":"0",

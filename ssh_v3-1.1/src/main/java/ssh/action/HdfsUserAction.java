@@ -60,7 +60,9 @@ public class HdfsUserAction extends ActionSupport implements
 	 */
 	public void login() throws ServletException, IOException {
 		Map<String, Object> map = new HashMap<>();
+		// 通过email从数据库中查询HdfsUser
 		HdfsUser hUser = hdfsUserService.getByEmail(hdfsUser.getEmail());
+		// 判断MySql是否存在数据，存在则放入session
 		if (hUser == null) {
 			map.put("flag", "false");
 			map.put("msg", "登录失败，用户名不存在!");
@@ -188,13 +190,16 @@ public class HdfsUserAction extends ActionSupport implements
 	 * 注册
 	 */
 	public void register() {
+		log.info("进行注册过程......");
 		Map<String, Object> map = new HashMap<>();
 		// 注册用户权限全部设置为用户
 		hdfsUser.setAuthority(Authority.USER.ordinal());
 		Integer ret = hdfsUserService.save(hdfsUser);
 		if (ret > 0) {
+			log.info("注册成功");
 			map.put("flag", "true");
 		} else {
+			log.info("注册失败");
 			map.put("flag", "false");
 			map.put("msg", "注册失败，请联系管理员!");
 		}
@@ -206,10 +211,11 @@ public class HdfsUserAction extends ActionSupport implements
 	 * 注册前的检查，是否有重email
 	 */
 	public void registerCheck() {
+		log.info("进行注册邮箱是否已被注册过");
 		Map<String, Object> map = new HashMap<>();
-
 		HdfsUser hUser = hdfsUserService.getByEmail(hdfsUser.getEmail());
 		if (hUser != null) {
+			log.info("该邮件名已经注册!");
 			map.put("flag", "false");
 			map.put("msg", "该邮件名已经注册!");
 		} else {

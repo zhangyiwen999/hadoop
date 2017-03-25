@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				style="width:300px" value="/" /> 
 				
 				<br>
-			<p>请输入检索条件，进行检索:</p>
+			<p>请输入筛选条件:</p>
 			<div >
 				文件名：<input class="easyui-validatebox" type="text"
 					id="hdfsManager_search_folder_name" style="width:60px;" value="" /> <select
