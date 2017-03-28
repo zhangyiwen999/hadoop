@@ -150,6 +150,14 @@ public class HdfsService {
 			// 关闭本地文件校验
 			HadoopUtils.getFs().copyToLocalFile(false, new Path(fileName),
 					new Path(localFile), true);
+			// Path path = new Path(fileName);
+			// FSDataInputStream in = HadoopUtils.getFs().open(path);
+			// OutputStream out = new FileOutputStream(localFile);
+			// byte[] buffer = new byte[1024];
+			// int length = 0;
+			// while ((length = in.read(buffer)) > 0) {
+			// out.write(buffer, 0, length);
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("数据下载异常，src:{},des:{}",

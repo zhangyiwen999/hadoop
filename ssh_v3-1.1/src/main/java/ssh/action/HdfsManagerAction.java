@@ -1,13 +1,27 @@
 package ssh.action;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.KeyGenerator;
 
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.security.AccessControlException;
@@ -23,6 +37,8 @@ import ssh.util.Utils;
 import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
+import demo.dfs.SensitiveWordFilter;
 
 /**
  * HDFS 文件管理系统Action 每个方法前加入权限判断
@@ -46,6 +62,7 @@ public class HdfsManagerAction extends ActionSupport implements
 	private int page;
 
 	private File file;
+
 	private String fileFileName;
 
 	private String fileContentType;
@@ -53,6 +70,90 @@ public class HdfsManagerAction extends ActionSupport implements
 	@Override
 	public HdfsRequestProperties getModel() {
 		return hdfsFile;
+	}
+
+	/*
+	 * 获取密钥
+	 */
+	public Key getKey(String strKey) {
+		Key key = null;
+		KeyGenerator _generator = null;
+		try {
+			_generator = KeyGenerator.getInstance("DES");
+			_generator.init(new SecureRandom(strKey.getBytes()));
+			key = (Key) _generator.generateKey();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return key;
+	}
+
+	/*
+	 * 加密
+	 */
+	public File encrypt(File file, String password) throws Exception {
+		File tmpFile = file;
+		Cipher cipher = Cipher.getInstance("DES");
+		cipher.init(Cipher.ENCRYPT_MODE, getKey(password));
+		InputStream is = new FileInputStream(file);
+		OutputStream out = new FileOutputStream(tmpFile);
+		CipherInputStream cis = new CipherInputStream(is, cipher);
+		byte[] buffer = new byte[1024];
+		int r;
+		while ((r = cis.read(buffer)) > 0) {
+			out.write(buffer, 0, r);
+		}
+		cis.close();
+		is.close();
+		out.close();
+		return tmpFile;
+	}
+
+	/*
+	 * 解密
+	 */
+	public void decrypt(String file, String password) throws Exception {
+		Cipher cipher = Cipher.getInstance("DES");
+		cipher.init(Cipher.DECRYPT_MODE, getKey(password));
+		InputStream is = new FileInputStream(file);
+		OutputStream out = new FileOutputStream(file);
+		CipherOutputStream cos = new CipherOutputStream(out, cipher);
+		byte[] buffer = new byte[1024];
+		int r;
+		while ((r = is.read(buffer)) >= 0) {
+			System.out.println();
+			cos.write(buffer, 0, r);
+		}
+		cos.close();
+		out.close();
+		is.close();
+	}
+
+	/*
+	 * 敏感词检测
+	 */
+	public int sensitiveCheck() throws Exception {
+		String contentString = null;
+		// 对一串字符进行操作
+		StringBuffer fileData = new StringBuffer();
+		// 将file传入
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		char[] buf = new char[1024];
+		int numRead = 0;
+		while ((numRead = reader.read(buf)) != -1) {
+			String readData = String.valueOf(buf, 0, numRead);
+			fileData.append(readData);
+		}
+		// 缓冲区使用完必须关掉
+		reader.close();
+		contentString = fileData.toString();
+		log.info("传入的文件内容为:" + contentString);
+		// 进行敏感词检测
+		SensitiveWordFilter filter = new SensitiveWordFilter();
+		Set<String> set = filter.getSensitiveWord(contentString);
+		log.info("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
+		return set.size();
 	}
 
 	/**
@@ -223,17 +324,24 @@ public class HdfsManagerAction extends ActionSupport implements
 		return;
 	}
 
-	public void upload() {
+	public void upload() throws Exception {
 		Map<String, Object> map = new HashMap<>();
+		// 敏感词检测
+		int sensitvNum = sensitiveCheck();
 
+		// 加密上传
+		// file = encrypt(file, "123456");
 		boolean flag = false;
-
-		try {
-			flag = this.hdfsService.upload(file.getAbsolutePath(),
-					hdfsFile.getFolder() + "/" + fileFileName);
-		} catch (Exception e) {
-			map.put("msg", "请联系管理员!");
-			flag = false;
+		if (sensitvNum == 0) {
+			try {
+				flag = this.hdfsService.upload(file.getAbsolutePath(),
+						hdfsFile.getFolder() + "/" + fileFileName);
+			} catch (Exception e) {
+				map.put("msg", "请联系管理员!");
+				flag = false;
+			}
+		} else {
+			map.put("msg", "该文件含有敏感词");
 		}
 
 		if (flag) {// 上传成功
@@ -267,6 +375,7 @@ public class HdfsManagerAction extends ActionSupport implements
 		try {
 			flag = this.hdfsService.download(hdfsFile.getFileName(),
 					hdfsFile.getLocalFile());
+			log.info("下载文件的本地目录:" + hdfsFile.getLocalFile());
 		} catch (Exception e) {
 			map.put("msg", "请联系管理员!");
 			flag = false;

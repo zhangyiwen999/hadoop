@@ -26,14 +26,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div style="padding: 15px">
 		<div style="margin:20px 0;">
 		<form id="dg_hdfsManager_file_upload_ff"  method="post" enctype="multipart/form-data">
-			上传文件：<input id ="dg_hdfsManager_file_upload_input" name="file" class="easyui-filebox" style="width:300px">
+			上传文件：
+			<input id ="dg_hdfsManager_file_upload_input" name="file" class="easyui-filebox" style="width:300px">
 			<br><br>
 <!-- 			<input name="fileName" value="" id="dg_hdfsManager_file_upload_fileName" class="easyui-textbox"> -->
-			上传目录：<input id="dg_hdfsManager_file_upload_folder" name="folder" class="easyui-textbox" data-options="required:true"  value="/" style="width:300px">
+			上传目录：
+			<input id="dg_hdfsManager_file_upload_folder" name="folder" class="easyui-textbox" data-options="required:true"  value="/" style="width:300px">
+			<!--  
+			<br>
+			请输入需要的加密方式：
+			<select id="dg_hdfsManager_file_upload_Encypt" 
+				class="easyui-combobox"
+				 style="width:80px;">
+				<option value="1" >PBE</option>
+			</select>
+			-->
 			<br>
 			<a id="dg_hdfsManager_file_upload_btn" 
 				class="easyui-linkbutton" data-options="iconCls:'icon-door_in'">上传</a>
-				</form>
+		</form>
 		</div>
 		</div>
 		<script type="text/javascript" src="js/hdfsManager/file.js"></script>
